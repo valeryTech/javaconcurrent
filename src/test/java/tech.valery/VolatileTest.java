@@ -22,7 +22,7 @@ public class VolatileTest {
         sleep(timeToWait);
         System.out.println("main thread: end sleep");
 
-        stoppableTask.setStopSignal();
+        stoppableTask.sendStopSignal();
         long runningTime = TimeUnit.MILLISECONDS.convert(stoppableTask.getRunningTime(), TimeUnit.NANOSECONDS);
 
         sleep(timeToWait);

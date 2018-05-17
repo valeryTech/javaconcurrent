@@ -33,7 +33,7 @@ public class StoppableTask implements Runnable{
         return System.nanoTime() - startTime > MAX_TIME_THRESHOLD;
     }
 
-    public void setStopSignal() {
+    public void sendStopSignal() {
         shouldStop = true;
     }
 
