@@ -8,29 +8,36 @@ import java.util.concurrent.TimeUnit;
 public class VolatileTest {
 
     @Test
-    void FlagChangesShouldBeVisible_WhenStateIsChanged(){
+    void FlagChangesShouldBeVisible_WhenStateIsChangedFromAnotherThread(){
 
         StoppableTask stoppableTask = new StoppableTask();
 
-        long timeToWait = 1200;
-        long epsilon = 10;
+        long timeToWait = 1200; //milliseconds
+        long epsilon = 10; //milliseconds
 
         Thread runner = new Thread(stoppableTask);
         runner.start();
 
+        System.out.println("main thread: start sleep");
+        sleep(timeToWait);
+        System.out.println("main thread: end sleep");
+
+        stoppableTask.setStopSignal();
+        long runningTime = TimeUnit.MILLISECONDS.convert(stoppableTask.getRunningTime(), TimeUnit.NANOSECONDS);
+
+        sleep(timeToWait);
+
+        Assertions.assertTrue(runningTime < timeToWait + epsilon);
+    }
+
+    private void sleep(long timeToWait) {
         try {
-            System.out.println("main thread: start sleep");
-            TimeUnit.MICROSECONDS.sleep(timeToWait);
-            System.out.println("main thread: end sleep");
+
+            TimeUnit.MILLISECONDS.sleep(timeToWait);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        stoppableTask.setStopSignal();
-
-        long runningTime = TimeUnit.MICROSECONDS.convert(stoppableTask.getRunningTime(), TimeUnit.NANOSECONDS);
-
-        Assertions.assertTrue(runningTime < timeToWait + epsilon);
     }
 
 

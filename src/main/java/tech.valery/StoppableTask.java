@@ -9,8 +9,8 @@ public class StoppableTask implements Runnable{
 
     private volatile boolean shouldStop;
 
-    private static final long MAX_TIME_THRESHOLD = 2000000;
-    private static final long TIME_STEP = 50;
+    private static final long MAX_TIME_THRESHOLD = TimeUnit.NANOSECONDS.convert(4, TimeUnit.SECONDS);
+    private static final long TIME_STEP = 300;
 
     public void run() {
 
@@ -20,7 +20,7 @@ public class StoppableTask implements Runnable{
             System.out.println("running");
 
             try {
-                TimeUnit.MICROSECONDS.sleep(TIME_STEP);
+                TimeUnit.MILLISECONDS.sleep(TIME_STEP);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -38,7 +38,6 @@ public class StoppableTask implements Runnable{
     }
 
     public long getRunningTime() {
-
-        return TimeUnit.MICROSECONDS.convert(runningTime, TimeUnit.NANOSECONDS);
+        return TimeUnit.MILLISECONDS.convert(runningTime, TimeUnit.NANOSECONDS);
     }
 }
