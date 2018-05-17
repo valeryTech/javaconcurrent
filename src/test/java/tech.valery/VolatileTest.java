@@ -44,9 +44,11 @@ public class VolatileTest {
     /**
      * One-time safe publication.
      * An object to publish must be properly constructed, thread-safe, immutable or effectively immutable.
+     *
+     * Source: https://www.ibm.com/developerworks/java/library/j-jtp06197/index.html?ca=drs-
      */
     @Test
-    void ShouldDoneSafePublication_When_GivenReferenceFinalType(){
+    void ShouldDoneSafePublication_WhenAttemptedToConstructDelayed_GivenReferenceFinalType(){
 
         // we need to check proper publication of fully constructed object,
         // so the parameters of the flooble to construct must be passed to the loader
@@ -74,4 +76,18 @@ public class VolatileTest {
 
         Assertions.assertTrue(!isPartiallyConstructed);
     }
+
+    /**
+     * Cheap read-write lock is produced by using two different sync strategies for read and write
+     */
+
+    @Test
+    void ShouldCheapRead_WhenSynchronized(){
+
+        CheesyCounter cheesyCounter = new CheesyCounter();
+        CompletableFuture.supplyAsync(cheesyCounter::increment);
+        CompletableFuture.supplyAsync(cheesyCounter::increment);
+        Assertions.assertEquals(1, cheesyCounter.getValue());
+    }
+
 }
