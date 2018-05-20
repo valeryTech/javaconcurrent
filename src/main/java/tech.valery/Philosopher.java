@@ -39,6 +39,7 @@ public class Philosopher implements Runnable{
         while (!shouldStop){
             synchronized (leftChopstick){
                 System.out.println("Philosopher #" + number + ": try to get right lock.");
+                sleep(200);
                 synchronized (rightChopstick){
                     System.out.println("Philosopher #" + number + " eating.");
                     sleep(timeout);

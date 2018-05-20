@@ -29,7 +29,7 @@ public class PhilosopherTest {
 
         philosophers.forEach(philosopher -> new Thread(philosopher).start());
 
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(5);
     }
 
 }
