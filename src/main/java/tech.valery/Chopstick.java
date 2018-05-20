@@ -1,16 +1,16 @@
 package tech.valery;
 
 public class Chopstick {
-    private int forkNumber;
+    private int idNumber;
 
-    public Chopstick(int forkNumber) {
-        this.forkNumber = forkNumber;
+    public Chopstick(int idNumber) {
+        this.idNumber = idNumber;
     }
 
     @Override
     public String toString() {
         return "Chopstick{" +
-                "forkNumber=" + forkNumber +
+                "idNumber=" + idNumber +
                 '}';
     }
 }
