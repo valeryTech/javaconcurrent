@@ -5,30 +5,26 @@ import java.util.concurrent.TimeUnit;
 
 public class Philosopher implements Runnable{
     private int number;
-    private final Fork leftFork;
-    private final Fork rightFork;
-    private CountDownLatch start;
+    private final Chopstick leftChopstick;
+    private final Chopstick rightChopstick;
 
     public volatile boolean shouldStop;
 
 
 
-    public Philosopher(int number, Fork leftFork, Fork rightFork, CountDownLatch start) {
+    public Philosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick) {
         this.number = number;
 
-        this.leftFork = leftFork;
-        this.rightFork = rightFork;
-
-
-        this.start = start;
+        this.leftChopstick = leftChopstick;
+        this.rightChopstick = rightChopstick;
     }
 
     @Override
     public String toString() {
         return "Philosopher{" +
                 "number=" + number +
-                ", leftFork=" + leftFork +
-                ", rightFork=" + rightFork +
+                ", leftChopstick=" + leftChopstick +
+                ", rightChopstick=" + rightChopstick +
                 '}';
     }
 
@@ -39,33 +35,26 @@ public class Philosopher implements Runnable{
     @Override
     public void run() {
 
-        try {
-            start.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        int timeout = 1000;
         while (!shouldStop){
-            synchronized (leftFork){
+            synchronized (leftChopstick){
                 System.out.println("Philosopher #" + number + ": try to get right lock.");
-                synchronized (rightFork){
-                    try {
-                        System.out.println("Philosopher #" + number + " eating.");
-                        TimeUnit.MILLISECONDS.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
+                synchronized (rightChopstick){
+                    System.out.println("Philosopher #" + number + " eating.");
+                    sleep(timeout);
                 }
             }
-        }
 
-        try {
             System.out.println("Philosopher #" + number + " thinking.");
-            TimeUnit.MILLISECONDS.sleep(1000);
+            sleep(timeout);
+        }
+    }
+
+    private void sleep(int timeout) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(timeout);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }
