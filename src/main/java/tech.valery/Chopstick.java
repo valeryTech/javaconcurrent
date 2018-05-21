@@ -1,7 +1,9 @@
 package tech.valery;
 
 public interface Chopstick {
-    void get();
+    boolean get();
 
     void put();
+
+    boolean canGet();
 }
