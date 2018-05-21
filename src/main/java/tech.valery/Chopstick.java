@@ -1,20 +1,7 @@
 package tech.valery;
 
-public class Chopstick {
-    private final int id;
+public interface Chopstick {
+    void get();
 
-    public Chopstick(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Chopstick{" +
-                "id=" + id +
-                '}';
-    }
-
-    public void take() {
-
-    }
+    void put();
 }

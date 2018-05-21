@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class PhilosopherTest {
@@ -15,7 +14,7 @@ public class PhilosopherTest {
         List<Chopstick> chopsticks = new ArrayList<Chopstick>();
         int forksNumber = 5;
         for(int i = 0; i < forksNumber; i++){
-            chopsticks.add(new Chopstick(i));
+            chopsticks.add(new SynchronisedChopstick(i));
         }
 
         List<Philosopher> philosophers = new ArrayList<Philosopher>();

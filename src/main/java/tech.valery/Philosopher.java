@@ -1,6 +1,5 @@
 package tech.valery;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class Philosopher implements Runnable{
