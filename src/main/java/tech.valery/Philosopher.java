@@ -57,4 +57,14 @@ public class Philosopher implements Runnable{
             e.printStackTrace();
         }
     }
+
+    public void prepareForEat() {
+        pickUp(leftChopstick);
+        pickUp(rightChopstick);
+
+    }
+
+    private void pickUp(Chopstick stick) {
+        stick.get();
+    }
 }

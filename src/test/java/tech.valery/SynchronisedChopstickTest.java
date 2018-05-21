@@ -3,8 +3,6 @@ package tech.valery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
-
 import static tech.valery.Common.sleep;
 
 
@@ -14,7 +12,7 @@ public class SynchronisedChopstickTest {
 
     @Test
     void ShouldGetBusyState_WhenChopsickIsAlreadyTaken() {
-        Chopstick chopstick = new SynchronisedChopstick(1);
+        Chopstick chopstick = new SynchronisedChopstick(0);
         chopstick.get();
 
         Assertions.assertTrue(!chopstick.canGet());
