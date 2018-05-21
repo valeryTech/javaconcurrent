@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static tech.valery.Common.sleep;
+
 public class PhilosopherTest {
 
     @Test
@@ -28,7 +30,7 @@ public class PhilosopherTest {
 
         philosophers.forEach(philosopher -> new Thread(philosopher).start());
 
-        TimeUnit.SECONDS.sleep(5);
+        sleep(3000);
     }
 
 }

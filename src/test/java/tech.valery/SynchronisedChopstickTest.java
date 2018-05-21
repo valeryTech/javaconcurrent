@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
+import static tech.valery.Common.sleep;
+
 
 public class SynchronisedChopstickTest {
 
@@ -28,26 +30,20 @@ public class SynchronisedChopstickTest {
         Runnable r = () -> {
             while (true) {
 
-                boolean isGetted = chopstick.get();
-                if(isGetted) anotherThreadGetsNumber++;
+                boolean isGotten = chopstick.get();
+                if(isGotten) anotherThreadGetsNumber++;
 
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sleep(1000);
             }
         };
 
         new Thread(r).start();
 
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(2000);
 
         Assertions.assertEquals(2, anotherThreadGetsNumber);
     }
+
+
 
 }
