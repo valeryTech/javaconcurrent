@@ -19,4 +19,20 @@ public class TableTest {
 
         Assertions.assertFalse(table.isChopstickFree(0));
     }
+
+    @Test
+    void ShouldSetHolder_WhenChopstickIsPickedUp() {
+
+        Table table = new Table(5);
+
+        Chopstick leftStick = new SynchronisedChopstick(0);
+        Chopstick rightStick = new SynchronisedChopstick(1);
+
+        Philosopher ph = new Philosopher(0, leftStick, rightStick, table);
+
+        ph.prepareForEat();
+
+        Assertions.assertEquals(ph, leftStick.getHolder());
+        Assertions.assertEquals(ph, rightStick.getHolder());
+    }
 }

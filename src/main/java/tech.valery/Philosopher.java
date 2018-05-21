@@ -6,16 +6,18 @@ public class Philosopher implements Runnable{
     private int number;
     private final Chopstick leftChopstick;
     private final Chopstick rightChopstick;
+    private final Table table;
 
     public volatile boolean shouldStop;
 
 
 
-    public Philosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick) {
+    public Philosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick, Table table) {
         this.number = number;
 
         this.leftChopstick = leftChopstick;
         this.rightChopstick = rightChopstick;
+        this.table = table;
     }
 
     @Override
@@ -61,10 +63,10 @@ public class Philosopher implements Runnable{
     public void prepareForEat() {
         pickUp(leftChopstick);
         pickUp(rightChopstick);
-
     }
 
     private void pickUp(Chopstick stick) {
         stick.get();
+        stick.setHolder(this);
     }
 }

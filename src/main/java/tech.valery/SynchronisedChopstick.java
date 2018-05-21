@@ -8,6 +8,8 @@ public class SynchronisedChopstick implements Chopstick {
         this.id = id;
     }
 
+    private volatile Philosopher holder;
+
     @Override
     public String toString() {
         return "Chopstick{" +
@@ -30,5 +32,15 @@ public class SynchronisedChopstick implements Chopstick {
     @Override
     public boolean canGet() {
         return free;
+    }
+
+    @Override
+    public void setHolder(Philosopher holder) {
+        this.holder = holder;
+    }
+
+    @Override
+    public Philosopher getHolder() {
+        return holder;
     }
 }

@@ -6,4 +6,8 @@ public interface Chopstick {
     void put();
 
     boolean canGet();
+
+    void setHolder(Philosopher philosopher);
+
+    Philosopher getHolder();
 }
