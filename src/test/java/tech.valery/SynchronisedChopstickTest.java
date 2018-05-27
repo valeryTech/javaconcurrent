@@ -3,8 +3,7 @@ package tech.valery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static tech.valery.Common.sleep;
-
+import java.util.concurrent.*;
 
 public class SynchronisedChopstickTest {
 
@@ -19,29 +18,30 @@ public class SynchronisedChopstickTest {
     }
 
     @Test
-    void ShouldBlockThreadsAttemptingToGetChopstick_WhenChopsickIsAlreadyTaken() {
+    void ShouldBlockThreadsAttemptingToGetChopstick_WhenChopsickIsAlreadyGotten()
+            throws ExecutionException, InterruptedException {
+
         Chopstick chopstick = new SynchronisedChopstick(1);
-        chopstick.get();
 
-        anotherThreadGetsNumber = 0;
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        Runnable r = () -> {
-            while (true) {
+        Callable<Long> r = ()->{
+            long startTime = System.nanoTime();
 
-                boolean isGotten = chopstick.get();
-                if(isGotten) anotherThreadGetsNumber++;
+            chopstick.get();
 
-                sleep(1000);
-            }
+            long blockingTime = TimeUnit.MILLISECONDS
+                    .convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+
+            return blockingTime;
         };
 
-        new Thread(r).start();
+        Future<Long> blockedTimeFuture = scheduler.schedule(r, 100, TimeUnit.MILLISECONDS);
 
-        sleep(2000);
+        chopstick.get();
 
-        Assertions.assertEquals(2, anotherThreadGetsNumber);
+        long blockedTime = blockedTimeFuture.get();
+
+        Assertions.assertTrue(300 - 10 < blockedTime && blockedTime < 300 + 1);
     }
-
-
-
 }

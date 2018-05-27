@@ -18,10 +18,9 @@ public class SynchronisedChopstick implements Chopstick {
     }
 
     @Override
-    public synchronized boolean get() {
-        System.out.println("Chopstick is taken");
+    public synchronized void get() {
+        Common.sleep(200);
         free = false;
-        return true;
     }
 
     @Override

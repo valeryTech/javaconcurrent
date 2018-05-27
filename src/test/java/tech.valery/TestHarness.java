@@ -1,6 +1,6 @@
 package tech.valery;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * TestHarness
