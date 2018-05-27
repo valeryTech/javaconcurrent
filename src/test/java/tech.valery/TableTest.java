@@ -8,13 +8,13 @@ public class TableTest {
     @Test
     void ShouldGetTrue_WhenChopstickIsInFreeState(){
 
-        Table table = new Table(5);
+        Table table = new Table(1);
         Assertions.assertTrue(table.isChopstickFree(0));
     }
 
     @Test
     void ShouldChangeChopstickState(){
-        Table table = new Table(5);
+        Table table = new Table(1);
         table.getChopstick(0);
 
         Assertions.assertFalse(table.isChopstickFree(0));
@@ -23,7 +23,7 @@ public class TableTest {
     @Test
     void ShouldSetHolder_WhenChopstickIsPickedUp() {
 
-        Table table = new Table(5);
+        Table table = new Table(1);
 
         Chopstick leftStick = new SynchronisedChopstick(0);
         Chopstick rightStick = new SynchronisedChopstick(1);
