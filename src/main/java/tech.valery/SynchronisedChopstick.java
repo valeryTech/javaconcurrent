@@ -1,8 +1,12 @@
 package tech.valery;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class SynchronisedChopstick implements Chopstick {
     private final int id;
-    private boolean free;
+
+    private final Lock lock = new ReentrantLock();
 
     public SynchronisedChopstick(int id) {
         this.id = id;
@@ -18,19 +22,13 @@ public class SynchronisedChopstick implements Chopstick {
     }
 
     @Override
-    public synchronized void get() {
-        Common.sleep(200);
-        free = false;
+    public synchronized void take() {
+        lock.lock();
     }
 
     @Override
     public synchronized void put() {
-        free = true;
-    }
-
-    @Override
-    public boolean canGet() {
-        return free;
+        lock.unlock();
     }
 
     @Override

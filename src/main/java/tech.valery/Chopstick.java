@@ -1,11 +1,9 @@
 package tech.valery;
 
 public interface Chopstick {
-    void get();
+    void take();
 
     void put();
-
-    boolean canGet();
 
     void setHolder(Philosopher philosopher);
 

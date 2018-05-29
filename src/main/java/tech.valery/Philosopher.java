@@ -39,7 +39,7 @@ public class Philosopher implements Runnable{
         int timeout = 1000;
         while (!shouldStop){
             synchronized (leftChopstick){
-                System.out.println("Philosopher #" + number + ": try to get right lock.");
+                System.out.println("Philosopher #" + number + ": try to take right lock.");
                 sleep(200);
                 synchronized (rightChopstick){
                     System.out.println("Philosopher #" + number + " eating.");
@@ -66,7 +66,7 @@ public class Philosopher implements Runnable{
     }
 
     private void pickUp(Chopstick stick) {
-        stick.get();
+        stick.take();
         stick.setHolder(this);
     }
 }
