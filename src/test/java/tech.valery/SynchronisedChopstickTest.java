@@ -10,14 +10,6 @@ public class SynchronisedChopstickTest {
     private volatile int anotherThreadGetsNumber;
 
     @Test
-    void ShouldGetBusyState_WhenChopsickIsAlreadyTaken() {
-        Chopstick chopstick = new SynchronisedChopstick(0);
-        chopstick.get();
-
-        Assertions.assertTrue(!chopstick.canGet());
-    }
-
-    @Test
     void ShouldBlockThreadsAttemptingToGetChopstick_WhenChopsickIsAlreadyGotten()
             throws ExecutionException, InterruptedException {
 
@@ -25,23 +17,29 @@ public class SynchronisedChopstickTest {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        Callable<Long> r = ()->{
+        Callable<Long> getAndPut = ()->{
             long startTime = System.nanoTime();
 
-            chopstick.get();
+            chopstick.take();
 
             long blockingTime = TimeUnit.MILLISECONDS
                     .convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
 
+            Common.sleep(100);
+
+            chopstick.put();
+
             return blockingTime;
         };
 
-        Future<Long> blockedTimeFuture = scheduler.schedule(r, 100, TimeUnit.MILLISECONDS);
+        Future<Long> blockedTimeFuture = scheduler.schedule(getAndPut, 100, TimeUnit.MILLISECONDS);
 
-        chopstick.get();
+        chopstick.take();
+        Common.sleep(200);
+        chopstick.put();
 
         long blockedTime = blockedTimeFuture.get();
-
-        Assertions.assertTrue(300 - 10 < blockedTime && blockedTime < 300 + 1);
+        System.out.println(blockedTime);
+        Assertions.assertTrue(100 - 5 < blockedTime && blockedTime < 100 + 5);
     }
 }
