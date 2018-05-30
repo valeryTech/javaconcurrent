@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class BoundedBufferTest {
+
     @Test
     void ShouldCheckForEmptiness_WhenBufferIsJustCreated(){
         int capacity = 1;
