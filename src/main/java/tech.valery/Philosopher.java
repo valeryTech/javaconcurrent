@@ -66,7 +66,11 @@ public class Philosopher implements Runnable{
     }
 
     private void pickUp(Chopstick stick) {
-        stick.take();
+        try {
+            stick.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         stick.setHolder(this);
     }
 }

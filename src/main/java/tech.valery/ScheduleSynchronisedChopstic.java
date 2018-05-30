@@ -37,6 +37,11 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
     }
 
     @Override
+    public Boolean isGotten() {
+        return null;
+    }
+
+    @Override
     public Philosopher getHolder() {
         return holder;
     }
