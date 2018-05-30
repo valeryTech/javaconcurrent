@@ -13,8 +13,6 @@ public class LockChopstick implements Chopstick {
     private final Lock lock = new ReentrantLock();
 
     private Condition hasFreed = lock.newCondition();
-    private Condition hasTaken = lock.newCondition();
-
 
     @Override
     public void take() throws InterruptedException {
@@ -24,10 +22,7 @@ public class LockChopstick implements Chopstick {
             while (!free){
                 hasFreed.await();
             }
-
             free = false;
-            hasTaken.signal();
-
         }finally {
             lock.unlock();
         }
@@ -56,6 +51,6 @@ public class LockChopstick implements Chopstick {
 
     @Override
     public Boolean isGotten() {
-        return true;
+        return !free;
     }
 }
