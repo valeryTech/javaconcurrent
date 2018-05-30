@@ -10,4 +10,6 @@ public interface Chopstick {
     Philosopher getHolder();
 
     Boolean isGotten();
+
+    int getId();
 }

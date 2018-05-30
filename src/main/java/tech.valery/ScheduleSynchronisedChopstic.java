@@ -14,11 +14,10 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
 
     private volatile Philosopher holder;
 
+
     @Override
-    public String toString() {
-        return "Chopstick{" +
-                "id=" + id +
-                '}';
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -44,5 +43,12 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
     @Override
     public Philosopher getHolder() {
         return holder;
+    }
+
+    @Override
+    public String toString() {
+        return "Chopstick{" +
+                "id=" + id +
+                '}';
     }
 }

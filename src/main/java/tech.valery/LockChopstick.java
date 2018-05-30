@@ -8,8 +8,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LockChopstick implements Chopstick {
 
+
     private final int id;
-    @GuardedBy("this") private boolean free = true;
+    @GuardedBy("this")
+    private boolean free = true;
 
     private final Lock lock = new ReentrantLock();
 
@@ -20,15 +22,20 @@ public class LockChopstick implements Chopstick {
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
     public void take() throws InterruptedException {
 
         lock.lock();
         try {
-            while (!free){
+            while (!free) {
                 hasFreed.await();
             }
             free = false;
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -39,7 +46,7 @@ public class LockChopstick implements Chopstick {
         try {
             free = true;
             hasFreed.signal();
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
