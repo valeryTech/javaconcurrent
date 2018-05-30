@@ -3,12 +3,12 @@ package tech.valery;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class SynchronisedChopstick implements Chopstick {
+public class ScheduleSynchronisedChopstic implements Chopstick {
     private final int id;
 
     private final Lock lock = new ReentrantLock();
 
-    public SynchronisedChopstick(int id) {
+    public ScheduleSynchronisedChopstic(int id) {
         this.id = id;
     }
 

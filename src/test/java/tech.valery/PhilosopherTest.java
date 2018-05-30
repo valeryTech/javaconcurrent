@@ -17,7 +17,7 @@ public class PhilosopherTest {
         List<Chopstick> chopsticks = new ArrayList<Chopstick>();
         int forksNumber = 5;
         for(int i = 0; i < forksNumber; i++){
-            chopsticks.add(new SynchronisedChopstick(i));
+            chopsticks.add(new ScheduleSynchronisedChopstic(i));
         }
 
         List<Philosopher> philosophers = new ArrayList<Philosopher>();

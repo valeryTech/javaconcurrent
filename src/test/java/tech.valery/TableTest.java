@@ -25,8 +25,8 @@ public class TableTest {
 
         Table table = new Table(1);
 
-        Chopstick leftStick = new SynchronisedChopstick(0);
-        Chopstick rightStick = new SynchronisedChopstick(1);
+        Chopstick leftStick = new ScheduleSynchronisedChopstic(0);
+        Chopstick rightStick = new ScheduleSynchronisedChopstic(1);
 
         Philosopher ph = new Philosopher(0, leftStick, rightStick, table);
 
