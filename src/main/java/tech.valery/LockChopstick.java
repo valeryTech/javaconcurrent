@@ -8,11 +8,16 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LockChopstick implements Chopstick {
 
+    private final int id;
     @GuardedBy("this") private boolean free = true;
 
     private final Lock lock = new ReentrantLock();
 
     private Condition hasFreed = lock.newCondition();
+
+    public LockChopstick(int id) {
+        this.id = id;
+    }
 
     @Override
     public void take() throws InterruptedException {
@@ -52,5 +57,13 @@ public class LockChopstick implements Chopstick {
     @Override
     public Boolean isGotten() {
         return !free;
+    }
+
+    @Override
+    public String toString() {
+        return "stick{" +
+                "id=" + id +
+                ", free=" + free +
+                '}';
     }
 }

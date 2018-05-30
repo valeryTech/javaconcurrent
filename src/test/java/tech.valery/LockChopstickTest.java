@@ -11,7 +11,7 @@ public class LockChopstickTest {
     @Test
     void ShouldGetProperState_WhenIsTaken() throws InterruptedException {
 
-        Chopstick chopstick = new LockChopstick();
+        Chopstick chopstick = new LockChopstick(0);
         chopstick.take();
 
         Boolean gotten = chopstick.isGotten();
@@ -23,7 +23,7 @@ public class LockChopstickTest {
 
     @Test
     void ShouldThreadsBlockOnGet_WhenChopstickIsAlreadyGotten() throws InterruptedException {
-        Chopstick chopstick = new LockChopstick();
+        Chopstick chopstick = new LockChopstick(0);
         chopstick.take();
 
         Executor executor = Executors.newFixedThreadPool(2);

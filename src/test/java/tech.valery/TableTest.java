@@ -21,7 +21,7 @@ public class TableTest {
     }
 
     @Test
-    void ShouldSetHolder_WhenChopstickIsPickedUp() {
+    void ShouldSetHolder_WhenChopstickIsPickedUp() throws InterruptedException {
 
         Table table = new Table(1);
 

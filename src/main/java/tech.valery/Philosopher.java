@@ -2,14 +2,13 @@ package tech.valery;
 
 import java.util.concurrent.TimeUnit;
 
-public class Philosopher implements Runnable{
+public class Philosopher implements Runnable {
     private int number;
     private final Chopstick leftChopstick;
     private final Chopstick rightChopstick;
     private final Table table;
 
     public volatile boolean shouldStop;
-
 
 
     public Philosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick, Table table) {
@@ -22,55 +21,54 @@ public class Philosopher implements Runnable{
 
     @Override
     public String toString() {
-        return "Philosopher{" +
-                "number=" + number +
-                ", leftChopstick=" + leftChopstick +
-                ", rightChopstick=" + rightChopstick +
-                '}';
+        return "P" + number;
     }
 
-    public void stopSignal(){
+    public void stopSignal() {
         shouldStop = true;
     }
 
     @Override
     public void run() {
+        while (true) {
+            long timeout = 200;
+            try {
+                prepareForEat();
+                eat(timeout);
 
-        int timeout = 1000;
-        while (!shouldStop){
-            synchronized (leftChopstick){
-                System.out.println("Philosopher #" + number + ": try to take right lock.");
-                sleep(200);
-                synchronized (rightChopstick){
-                    System.out.println("Philosopher #" + number + " eating.");
-                    sleep(timeout);
-                }
+                prepareToThink();
+                think(timeout);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            System.out.println("Philosopher #" + number + " thinking.");
-            sleep(timeout);
         }
     }
 
-    private void sleep(int timeout) {
+    public void prepareForEat() throws InterruptedException {
+            leftChopstick.take();
+            sleep(40);
+            rightChopstick.take();
+    }
+
+    private void prepareToThink() throws InterruptedException {
+            leftChopstick.put();
+            rightChopstick.put();
+    }
+
+    private void eat(long eatDuration) {
+        System.out.println(this + " eating.");
+        sleep(eatDuration);
+    }
+
+    private void think(long thinkDuration) {
+        sleep(thinkDuration);
+    }
+
+    private void sleep(long timeout) {
         try {
             TimeUnit.MILLISECONDS.sleep(timeout);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void prepareForEat() {
-        pickUp(leftChopstick);
-        pickUp(rightChopstick);
-    }
-
-    private void pickUp(Chopstick stick) {
-        try {
-            stick.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        stick.setHolder(this);
     }
 }
