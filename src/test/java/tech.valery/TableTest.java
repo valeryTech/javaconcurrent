@@ -30,7 +30,7 @@ public class TableTest {
 
         Philosopher ph = new Philosopher(0, leftStick, rightStick, table);
 
-        ph.prepareForEat();
+        ph.prepareToEat();
 
         Assertions.assertEquals(ph, leftStick.getHolder());
         Assertions.assertEquals(ph, rightStick.getHolder());

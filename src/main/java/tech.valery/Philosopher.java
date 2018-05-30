@@ -33,7 +33,7 @@ public class Philosopher implements Runnable {
         while (true) {
             long timeout = 200;
             try {
-                prepareForEat();
+                prepareToEat();
                 eat(timeout);
 
                 prepareToThink();
@@ -44,15 +44,28 @@ public class Philosopher implements Runnable {
         }
     }
 
-    public void prepareForEat() throws InterruptedException {
-            leftChopstick.take();
-            sleep(40);
-            rightChopstick.take();
+    public void prepareToEat() throws InterruptedException {
+        leftChopstick.take();
+        sleep(40);
+        rightChopstick.take();
+    }
+
+    /**
+     * The partial order of resources is used in resource hierarchy solution to dining problems.
+     * @throws InterruptedException
+     */
+    public void prepareToEatOrdered() throws InterruptedException {
+        Chopstick firstChopstcik = leftChopstick.getId() < rightChopstick.getId() ? leftChopstick : rightChopstick;
+        Chopstick secondChopstick = leftChopstick.getId() < rightChopstick.getId() ? rightChopstick : leftChopstick;
+
+        firstChopstcik.take();
+        sleep(40);
+        secondChopstick.take();
     }
 
     private void prepareToThink() throws InterruptedException {
-            leftChopstick.put();
-            rightChopstick.put();
+        leftChopstick.put();
+        rightChopstick.put();
     }
 
     private void eat(long eatDuration) {
