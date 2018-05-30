@@ -6,6 +6,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Chopstick uses the ReentrantLock to provide concurrency safety to the client classes.
+ * Condition queue is explicit.
+ */
 public class LockChopstick implements Chopstick {
 
 
