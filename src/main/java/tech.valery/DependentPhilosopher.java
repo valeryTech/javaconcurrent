@@ -2,9 +2,8 @@ package tech.valery;
 
 public class DependentPhilosopher extends Philosopher {
 
-    public DependentPhilosopher(Chopstick rightChopstick,
-                                int number, Chopstick leftChopstick, Table table) {
-        super(rightChopstick, number, leftChopstick, table);
+    public DependentPhilosopher(int seat, Table table) {
+        super(seat, table);
     }
 
     @Override

@@ -9,14 +9,23 @@ public abstract class Philosopher implements Runnable {
     protected final Chopstick leftChopstick;
     protected final Chopstick rightChopstick;
 
+    public Chopstick getLeftChopstick() {
+        return leftChopstick;
+    }
+
+    public Chopstick getRightChopstick() {
+        return rightChopstick;
+    }
+
     protected final Table table;
 
     public volatile boolean shouldStop;
 
-    public Philosopher(Chopstick rightChopstick, int number, Chopstick leftChopstick, Table table) {
-        this.rightChopstick = rightChopstick;
-        this.number = number;
-        this.leftChopstick = leftChopstick;
+    public Philosopher(int seat, Table table) {
+        this.rightChopstick = table.getRightChopstick(seat);
+        this.leftChopstick = table.getLeftChopstick(seat);
+
+        this.number = seat;
         this.table = table;
     }
 

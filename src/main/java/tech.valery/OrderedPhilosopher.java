@@ -3,8 +3,7 @@ package tech.valery;
 public class OrderedPhilosopher extends Philosopher {
 
     public OrderedPhilosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick, Table table) {
-        super(rightChopstick, number, leftChopstick, table);
-
+        super(number, table);
     }
 
     public void stopSignal() {

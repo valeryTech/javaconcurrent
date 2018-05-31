@@ -3,6 +3,8 @@ package tech.valery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class TableTest {
 
     @Test
@@ -38,7 +40,12 @@ public class TableTest {
 
     @Test
     void ShouldWaitUntilAllChopsticksIsAvailable_WhenTableIsArbitrator(){
-        Table table = new Table(5);
+        int problemSize = 5;
+
+        Table table = new Table(problemSize);
+
+        Philosopher[] philosophers = new DependentPhilosopher[problemSize];
+        Arrays.setAll(philosophers, i -> new DependentPhilosopher(i, table));
 
 
     }
