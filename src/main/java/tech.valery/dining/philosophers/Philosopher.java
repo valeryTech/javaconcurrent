@@ -3,26 +3,14 @@ package tech.valery.dining.philosophers;
 import tech.valery.dining.Table;
 import tech.valery.dining.chopsticks.Chopstick;
 
-import java.util.concurrent.TimeUnit;
-
 public abstract class Philosopher implements Runnable {
 
-    protected int seat;
+    protected final int seat;
 
     protected final Chopstick leftChopstick;
     protected final Chopstick rightChopstick;
 
-    public Chopstick getLeftChopstick() {
-        return leftChopstick;
-    }
-
-    public Chopstick getRightChopstick() {
-        return rightChopstick;
-    }
-
     protected final Table table;
-
-    public volatile boolean shouldStop;
 
     public Philosopher(int seat, Table table) {
         this.rightChopstick = table.getRightChopstick(seat);
@@ -65,7 +53,6 @@ public abstract class Philosopher implements Runnable {
     }
 
     private void eat(long eatDuration) {
-        System.out.println(this + " eating.");
         sleep(eatDuration);
     }
 
@@ -73,11 +60,7 @@ public abstract class Philosopher implements Runnable {
         sleep(thinkDuration);
     }
 
-    protected void sleep(long timeout) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(timeout);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    protected void sleep(long sleepDuration) {
+        sleep(sleepDuration);
     }
 }

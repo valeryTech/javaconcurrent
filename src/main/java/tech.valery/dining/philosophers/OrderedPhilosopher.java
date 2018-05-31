@@ -9,12 +9,8 @@ public class OrderedPhilosopher extends Philosopher {
         super(number, table);
     }
 
-    public void stopSignal() {
-        shouldStop = true;
-    }
-
     /**
-     * The partial order of resources is used in resource hierarchy solution to dining problems.
+     * The partial order of resources (sticks) is used in resource hierarchy solution to dining problems.
      * @throws InterruptedException
      */
     public void prepareToEat() throws InterruptedException {
