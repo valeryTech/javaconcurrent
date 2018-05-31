@@ -28,7 +28,7 @@ public class TableTest {
         Chopstick leftStick = new ScheduleSynchronisedChopstic(0);
         Chopstick rightStick = new ScheduleSynchronisedChopstic(1);
 
-        Philosopher ph = new Philosopher(0, leftStick, rightStick, table);
+        OrderedPhilosopher ph = new OrderedPhilosopher(0, leftStick, rightStick, table);
 
         ph.prepareToEat();
 

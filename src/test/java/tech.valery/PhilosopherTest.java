@@ -20,14 +20,14 @@ public class PhilosopherTest {
             chopsticks.add(new ScheduleSynchronisedChopstic(i));
         }
 
-        List<Philosopher> philosophers = new ArrayList<Philosopher>();
+        List<OrderedPhilosopher> philosophers = new ArrayList<OrderedPhilosopher>();
 
         int philosophersNumber = 5;
         for (int i = 0; i < philosophersNumber - 1; i++) {
-            philosophers.add(new Philosopher(i, chopsticks.get(i), chopsticks.get(i + 1), table));
+            philosophers.add(new OrderedPhilosopher(i, chopsticks.get(i), chopsticks.get(i + 1), table));
         }
 
-        philosophers.add(new Philosopher(4, chopsticks.get(forksNumber - 1), chopsticks.get(0), table));
+        philosophers.add(new OrderedPhilosopher(4, chopsticks.get(forksNumber - 1), chopsticks.get(0), table));
 
         philosophers.forEach(philosopher -> new Thread(philosopher).start());
 

@@ -2,30 +2,27 @@ package tech.valery;
 
 import java.util.concurrent.TimeUnit;
 
-public class Philosopher implements Runnable {
-    private int number;
-    private final Chopstick leftChopstick;
-    private final Chopstick rightChopstick;
-    private final Table table;
+public abstract class Philosopher implements Runnable {
+
+    protected int number;
+
+    protected final Chopstick leftChopstick;
+    protected final Chopstick rightChopstick;
+
+    protected final Table table;
 
     public volatile boolean shouldStop;
 
-
-    public Philosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick, Table table) {
-        this.number = number;
-
-        this.leftChopstick = leftChopstick;
+    public Philosopher(Chopstick rightChopstick, int number, Chopstick leftChopstick, Table table) {
         this.rightChopstick = rightChopstick;
+        this.number = number;
+        this.leftChopstick = leftChopstick;
         this.table = table;
     }
 
     @Override
     public String toString() {
         return "P" + number;
-    }
-
-    public void stopSignal() {
-        shouldStop = true;
     }
 
     @Override
@@ -44,24 +41,7 @@ public class Philosopher implements Runnable {
         }
     }
 
-    public void prepareToEat() throws InterruptedException {
-        leftChopstick.take();
-        sleep(40);
-        rightChopstick.take();
-    }
-
-    /**
-     * The partial order of resources is used in resource hierarchy solution to dining problems.
-     * @throws InterruptedException
-     */
-    public void prepareToEatOrdered() throws InterruptedException {
-        Chopstick firstChopstcik = leftChopstick.getId() < rightChopstick.getId() ? leftChopstick : rightChopstick;
-        Chopstick secondChopstick = leftChopstick.getId() < rightChopstick.getId() ? rightChopstick : leftChopstick;
-
-        firstChopstcik.take();
-        sleep(40);
-        secondChopstick.take();
-    }
+    public abstract void prepareToEat() throws InterruptedException;
 
     private void prepareToThink() throws InterruptedException {
         leftChopstick.put();
@@ -77,7 +57,7 @@ public class Philosopher implements Runnable {
         sleep(thinkDuration);
     }
 
-    private void sleep(long timeout) {
+    protected void sleep(long timeout) {
         try {
             TimeUnit.MILLISECONDS.sleep(timeout);
         } catch (InterruptedException e) {

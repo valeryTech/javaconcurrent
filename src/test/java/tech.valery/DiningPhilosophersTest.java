@@ -14,8 +14,8 @@ public class DiningPhilosophersTest {
 
         Table table = new Table(problemSize);
 
-        Philosopher[] philosophers = new Philosopher[problemSize];
-        Arrays.setAll(philosophers, i-> new Philosopher(i, sticks[i], sticks[(i+1) % problemSize], table));
+        OrderedPhilosopher[] philosophers = new OrderedPhilosopher[problemSize];
+        Arrays.setAll(philosophers, i-> new OrderedPhilosopher(i, sticks[i], sticks[(i+1) % problemSize], table));
 
         Arrays.stream(philosophers).forEach(System.out::println);
 

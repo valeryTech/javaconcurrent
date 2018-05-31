@@ -12,7 +12,7 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
         this.id = id;
     }
 
-    private volatile Philosopher holder;
+    private volatile OrderedPhilosopher holder;
 
 
     @Override
@@ -31,7 +31,7 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
     }
 
     @Override
-    public void setHolder(Philosopher holder) {
+    public void setHolder(OrderedPhilosopher holder) {
         this.holder = holder;
     }
 
@@ -41,7 +41,7 @@ public class ScheduleSynchronisedChopstic implements Chopstick {
     }
 
     @Override
-    public Philosopher getHolder() {
+    public OrderedPhilosopher getHolder() {
         return holder;
     }
 
