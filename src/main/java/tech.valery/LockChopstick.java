@@ -12,8 +12,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LockChopstick implements Chopstick {
 
-
+    @GuardedBy("this")
     private final int id;
+
     @GuardedBy("this")
     private boolean free = true;
 
@@ -56,12 +57,12 @@ public class LockChopstick implements Chopstick {
     }
 
     @Override
-    public void setHolder(Philosopher philosopher) {
+    public void setHolder(OrderedPhilosopher philosopher) {
 
     }
 
     @Override
-    public Philosopher getHolder() {
+    public OrderedPhilosopher getHolder() {
         return null;
     }
 

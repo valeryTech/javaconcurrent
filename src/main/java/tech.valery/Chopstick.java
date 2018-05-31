@@ -5,9 +5,9 @@ public interface Chopstick {
 
     void put() throws InterruptedException;
 
-    void setHolder(Philosopher philosopher);
+    void setHolder(OrderedPhilosopher philosopher);
 
-    Philosopher getHolder();
+    OrderedPhilosopher getHolder();
 
     Boolean isGotten();
 
