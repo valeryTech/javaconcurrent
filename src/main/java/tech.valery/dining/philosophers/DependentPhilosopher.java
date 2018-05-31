@@ -14,14 +14,11 @@ public class DependentPhilosopher extends Philosopher {
      */
     @Override
     public void prepareToEat() throws InterruptedException {
-        synchronized (this) { // we need to get both sticks simultaneously
-            //signal we can take both
-            table.waitSticks(this);
+        table.waitSticks(this);
 
-            leftChopstick.take();
-            sleep(50);
-            rightChopstick.take();
-        }
+        leftChopstick.take();
+        sleep(50);
+        rightChopstick.take();
     }
 
     @Override
