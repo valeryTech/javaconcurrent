@@ -15,21 +15,6 @@ import java.util.concurrent.CompletableFuture;
 public class TableTest {
 
     @Test
-    void ShouldGetTrue_WhenChopstickIsInFreeState(){
-
-        Table table = new Table(1);
-        Assertions.assertTrue(table.isChopstickFree(0));
-    }
-
-    @Test
-    void ShouldChangeChopstickState(){
-        Table table = new Table(1);
-        table.giveChopstickToPhilosopher(0);
-
-        Assertions.assertFalse(table.isChopstickFree(0));
-    }
-
-    @Test
     void ShouldSetHolder_WhenChopstickIsPickedUp() throws InterruptedException {
 
         Table table = new Table(1);
