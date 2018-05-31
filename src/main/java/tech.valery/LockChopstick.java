@@ -18,9 +18,9 @@ public class LockChopstick implements Chopstick {
     @GuardedBy("this")
     private boolean free = true;
 
-    private final Lock lock = new ReentrantLock();
+    public final Lock lock = new ReentrantLock();
 
-    private Condition hasFreed = lock.newCondition();
+    public final Condition hasFreed = lock.newCondition();
 
     public LockChopstick(int id) {
         this.id = id;

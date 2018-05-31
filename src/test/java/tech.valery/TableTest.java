@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class TableTest {
 
@@ -17,7 +18,7 @@ public class TableTest {
     @Test
     void ShouldChangeChopstickState(){
         Table table = new Table(1);
-        table.getChopstick(0);
+        table.giveChopstickToPhilosopher(0);
 
         Assertions.assertFalse(table.isChopstickFree(0));
     }
@@ -39,7 +40,7 @@ public class TableTest {
     }
 
     @Test
-    void ShouldWaitUntilAllChopsticksIsAvailable_WhenTableIsArbitrator(){
+    void PhilosopherShouldWaitUntilAllChopsticksIsAvailable_WhenItWantsToEat() throws InterruptedException {
         int problemSize = 5;
 
         Table table = new Table(problemSize);
@@ -47,6 +48,36 @@ public class TableTest {
         Philosopher[] philosophers = new DependentPhilosopher[problemSize];
         Arrays.setAll(philosophers, i -> new DependentPhilosopher(i, table));
 
+        Philosopher lockingPhilosopher = philosophers[0];
+        Philosopher asquiringPhilosoper = philosophers[1];
 
+        lockingPhilosopher.prepareToEat();
+
+        CompletableFuture.runAsync(()->{
+            try {
+                asquiringPhilosoper.prepareToEat();
+                Common.sleep(10);
+                asquiringPhilosoper.prepareToThink();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Common.sleep(10);
+        lockingPhilosopher.prepareToThink();
+    }
+
+    @Test
+    void ShouldRunWithoutDeadlocks_WhenUsingArbitrator() {
+        int problemSize = 5;
+
+        Table table = new Table(problemSize);
+
+        Philosopher[] philosophers = new DependentPhilosopher[problemSize];
+        Arrays.setAll(philosophers, i -> new DependentPhilosopher(i, table));
+
+        Arrays.stream(philosophers).forEach(CompletableFuture::runAsync);
+
+        Common.sleep(2000);
     }
 }

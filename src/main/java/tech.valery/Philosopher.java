@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class Philosopher implements Runnable {
 
-    protected int number;
+    protected int seat;
 
     protected final Chopstick leftChopstick;
     protected final Chopstick rightChopstick;
@@ -25,13 +25,17 @@ public abstract class Philosopher implements Runnable {
         this.rightChopstick = table.getRightChopstick(seat);
         this.leftChopstick = table.getLeftChopstick(seat);
 
-        this.number = seat;
+        this.seat = seat;
         this.table = table;
     }
 
     @Override
     public String toString() {
-        return "P" + number;
+        return "P" + seat;
+    }
+
+    public int getSeat() {
+        return seat;
     }
 
     @Override
@@ -50,9 +54,9 @@ public abstract class Philosopher implements Runnable {
         }
     }
 
-    public abstract void prepareToEat() throws InterruptedException;
+    protected abstract void prepareToEat() throws InterruptedException;
 
-    private void prepareToThink() throws InterruptedException {
+    protected void prepareToThink() throws InterruptedException {
         leftChopstick.put();
         rightChopstick.put();
     }
