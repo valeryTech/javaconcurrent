@@ -35,4 +35,11 @@ public class TableTest {
         Assertions.assertEquals(ph, leftStick.getHolder());
         Assertions.assertEquals(ph, rightStick.getHolder());
     }
+
+    @Test
+    void ShouldWaitUntilAllChopsticksIsAvailable_WhenTableIsArbitrator(){
+        Table table = new Table(5);
+
+
+    }
 }

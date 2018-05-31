@@ -21,4 +21,8 @@ public class Table {
     public void getChopstick(int chopstickId) {
         isFree[chopstickId] = false;
     }
+
+    public Chopstick getChopstick(Chopstick stickToReturn) {
+        return null;
+    }
 }
