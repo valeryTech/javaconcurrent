@@ -20,7 +20,7 @@ public class Table {
 
     private final int participantsNumber;
 
-    private final boolean[] isFree;
+    private final boolean[] chopstickIsInFreeState;
 
     private final Chopstick[] sticks;
 
@@ -30,24 +30,13 @@ public class Table {
     public Table(int participantsNumber) {
         this.participantsNumber = participantsNumber;
 
-        isFree = new boolean[participantsNumber];
-        Arrays.fill(isFree, Boolean.TRUE);
+        chopstickIsInFreeState = new boolean[participantsNumber];
+        Arrays.fill(chopstickIsInFreeState, Boolean.TRUE);
 
         sticks = new LockChopstick[participantsNumber];
         Arrays.setAll(sticks, i -> new LockChopstick(i));
 
         stickPhilRelation = new HashMap<>();
-    }
-
-    public boolean isChopstickFree(int chopstickId) {
-        return isFree[chopstickId];
-    }
-
-    public void giveChopstickToPhilosopher(int chopstickId) {
-        isFree[chopstickId] = false;
-    }
-
-    public synchronized void registerPhilosopher(Philosopher philosopher) {
     }
 
     public Chopstick getRightChopstick(int seat) {
@@ -68,8 +57,8 @@ public class Table {
                 System.out.println(Thread.currentThread().getId() + " waited for true conditions");
             }
 
-            isFree[philosopher.getSeat()] = false;
-            isFree[philosopher.getSeat() + 1] = false;
+            chopstickIsInFreeState[philosopher.getSeat()] = false;
+            chopstickIsInFreeState[philosopher.getSeat() + 1] = false;
         } finally {
             lock.unlock();
         }
@@ -78,8 +67,8 @@ public class Table {
     public void stickHasPuttedDown(Philosopher philosopher) {
         lock.lock();
         try {
-            isFree[philosopher.getSeat()] = true;
-            isFree[philosopher.getSeat() + 1] = true;
+            chopstickIsInFreeState[philosopher.getSeat()] = true;
+            chopstickIsInFreeState[philosopher.getSeat() + 1] = true;
             stateChanged.signalAll();
         } finally {
             lock.unlock();
@@ -87,6 +76,6 @@ public class Table {
     }
 
     private boolean bothSticksIsFree(Philosopher philosopher) {
-        return isFree[philosopher.getSeat()] && isFree[philosopher.getSeat() + 1];
+        return chopstickIsInFreeState[philosopher.getSeat()] && chopstickIsInFreeState[philosopher.getSeat() + 1];
     }
 }
