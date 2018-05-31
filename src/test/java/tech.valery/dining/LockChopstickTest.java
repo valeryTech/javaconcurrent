@@ -1,7 +1,10 @@
-package tech.valery;
+package tech.valery.dining;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import tech.valery.Common;
+import tech.valery.dining.chopsticks.Chopstick;
+import tech.valery.dining.chopsticks.LockChopstick;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

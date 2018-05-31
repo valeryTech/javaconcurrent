@@ -1,4 +1,6 @@
-package tech.valery;
+package tech.valery.dining;
+
+import tech.valery.dining.chopsticks.Chopstick;
 
 public class Waiter {
     public Chopstick getFirstChopstick() {

@@ -1,4 +1,7 @@
-package tech.valery;
+package tech.valery.dining.philosophers;
+
+import tech.valery.dining.Table;
+import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.concurrent.TimeUnit;
 
@@ -54,9 +57,9 @@ public abstract class Philosopher implements Runnable {
         }
     }
 
-    protected abstract void prepareToEat() throws InterruptedException;
+    public abstract void prepareToEat() throws InterruptedException;
 
-    protected void prepareToThink() throws InterruptedException {
+    public void prepareToThink() throws InterruptedException {
         leftChopstick.put();
         rightChopstick.put();
     }

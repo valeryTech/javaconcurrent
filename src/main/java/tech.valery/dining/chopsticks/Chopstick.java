@@ -1,4 +1,6 @@
-package tech.valery;
+package tech.valery.dining.chopsticks;
+
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 public interface Chopstick {
     void take() throws InterruptedException;

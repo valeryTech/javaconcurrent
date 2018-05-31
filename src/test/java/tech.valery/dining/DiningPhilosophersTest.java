@@ -1,6 +1,10 @@
-package tech.valery;
+package tech.valery.dining;
 
 import org.junit.jupiter.api.Test;
+import tech.valery.Common;
+import tech.valery.dining.chopsticks.Chopstick;
+import tech.valery.dining.chopsticks.LockChopstick;
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;

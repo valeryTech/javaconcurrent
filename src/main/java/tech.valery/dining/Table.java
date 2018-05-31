@@ -1,6 +1,9 @@
-package tech.valery;
+package tech.valery.dining;
 
 import net.jcip.annotations.GuardedBy;
+import tech.valery.dining.chopsticks.Chopstick;
+import tech.valery.dining.chopsticks.LockChopstick;
+import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.Arrays;
 import java.util.HashMap;

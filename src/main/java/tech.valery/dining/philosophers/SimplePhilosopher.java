@@ -1,4 +1,7 @@
-package tech.valery;
+package tech.valery.dining.philosophers;
+
+import tech.valery.dining.Table;
+import tech.valery.dining.chopsticks.Chopstick;
 
 public class SimplePhilosopher extends Philosopher{
 

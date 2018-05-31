@@ -1,6 +1,9 @@
-package tech.valery;
+package tech.valery.dining;
 
 import org.junit.jupiter.api.Test;
+import tech.valery.dining.chopsticks.Chopstick;
+import tech.valery.dining.chopsticks.ScheduleSynchronisedChopstic;
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 import java.util.ArrayList;
 import java.util.List;

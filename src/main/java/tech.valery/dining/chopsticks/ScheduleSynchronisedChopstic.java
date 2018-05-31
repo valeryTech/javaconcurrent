@@ -1,4 +1,6 @@
-package tech.valery;
+package tech.valery.dining.chopsticks;
+
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

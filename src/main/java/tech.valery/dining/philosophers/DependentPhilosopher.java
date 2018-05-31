@@ -1,4 +1,6 @@
-package tech.valery;
+package tech.valery.dining.philosophers;
+
+import tech.valery.dining.Table;
 
 public class DependentPhilosopher extends Philosopher {
 

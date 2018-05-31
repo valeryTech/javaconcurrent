@@ -1,6 +1,7 @@
-package tech.valery;
+package tech.valery.dining.chopsticks;
 
 import net.jcip.annotations.GuardedBy;
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
