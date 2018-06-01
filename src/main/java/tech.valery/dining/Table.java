@@ -4,11 +4,13 @@ import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Table {
 
@@ -20,19 +22,26 @@ public class Table {
     private final boolean[] chopstickIsInFreeState;
 
     private final Chopstick[] sticks;
+    private final Philosopher[] philosophers;
 
     public Table(int participantsNumber, Supplier<Chopstick> stickSupplier,
-                 BiFunction<Integer, Table, Philosopher> philosopherFactory) {
+                 Supplier<Philosopher> philosopherSupplier) {
         this.participantsNumber = participantsNumber;
 
         chopstickIsInFreeState = new boolean[participantsNumber];
         Arrays.fill(chopstickIsInFreeState, Boolean.TRUE);
 
+        List<Chopstick> csticks = Stream.generate(stickSupplier)
+                .limit(participantsNumber)
+                .collect(Collectors.toList());
+
         sticks = new Chopstick[participantsNumber];
         Arrays.setAll(sticks, i -> stickSupplier.get());
 
-        Philosopher[] philosophers = new Philosopher[participantsNumber];
-        Arrays.setAll(philosophers, i -> philosopherFactory.apply(i, this));
+
+
+        philosophers = new Philosopher[participantsNumber];
+        Arrays.setAll(philosophers, i -> philosopherSupplier.get());
     }
 
     public Chopstick getRightChopstick(int seat) {
