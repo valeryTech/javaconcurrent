@@ -1,6 +1,5 @@
 package tech.valery.dining;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.chopsticks.LockChopstick;
@@ -19,10 +18,6 @@ public class TableTest {
     private Table table;
     private int problemSize;
 
-    @BeforeEach
-    void initMonitoringSystem(){
-        table = new Table(problemSize, stickSupplier, philosopherFactory);
-    }
 
     @Test
     void ShouldRunWithoutDeadlocks_WhenUsingArbitrator() {
@@ -31,6 +26,8 @@ public class TableTest {
         stickSupplier = LockChopstick::new;
         philosopherFactory =
                 (Integer seat, Table table) -> new DependentPhilosopher(seat, table);
+
+        table = new Table(problemSize, stickSupplier, philosopherFactory);
 
         table.startSimulation();
     }
@@ -41,6 +38,8 @@ public class TableTest {
 
         stickSupplier = MisraStatefulStick::new;
         philosopherFactory = (Integer seat, Table table) -> new ChandyPhilosopher(seat, table);
+
+        table = new Table(problemSize, stickSupplier, philosopherFactory);
 
         table.startSimulation();
     }
