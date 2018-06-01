@@ -7,8 +7,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Chopstick uses the ReentrantLock to provide concurrency safety to the client classes.
- * Condition queue is explicit.
+ * Chopstick uses the ReentrantLock to provide a concurrency safety to the client classes.
+ * Condition queue is explicit and presented as {@code ReentrantLock}.
+ *
+ * Important issue in the protocol: stick can not be given up by an another thread
+ * when is still being holden by the current. So there is requirement to consumer classes:
+ *
+ * One should uses {@code put()} only after corresponding {@code take()} method.
+ *
  */
 public class LockChopstick implements Chopstick {
 
@@ -33,11 +39,11 @@ public class LockChopstick implements Chopstick {
     }
 
     @Override
-    public void put() throws InterruptedException {
+    public void put() {
         lock.lock();
         try {
             free = true;
-            hasFreed.signal();
+            hasFreed.signalAll();
         } finally {
             lock.unlock();
         }
