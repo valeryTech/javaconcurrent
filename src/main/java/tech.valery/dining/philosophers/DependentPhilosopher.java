@@ -23,7 +23,7 @@ public class DependentPhilosopher extends Philosopher {
 
     @Override
     public void prepareToThink() throws InterruptedException {
-        super.prepareToThink();
+
         table.stickHasPuttedDown(this);
     }
 }

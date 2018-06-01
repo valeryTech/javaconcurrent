@@ -61,9 +61,7 @@ public abstract class Philosopher implements Runnable {
 
     public abstract void prepareToEat() throws InterruptedException;
 
-    public void prepareToThink() throws InterruptedException {
-        sticks.forEach(Chopstick::put);
-    }
+    public abstract void prepareToThink() throws InterruptedException;
 
     private void eat(long eatDuration) {
         sleep(eatDuration);

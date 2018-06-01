@@ -14,7 +14,7 @@ public class ChandyPhilosopher extends Philosopher{
     }
 
     @Override
-    public void prepareToThink(){
+    public void prepareToThink() throws InterruptedException {
 
     }
 }

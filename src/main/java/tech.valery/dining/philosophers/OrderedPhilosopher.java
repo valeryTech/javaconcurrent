@@ -3,7 +3,12 @@ package tech.valery.dining.philosophers;
 import tech.valery.dining.Table;
 import tech.valery.dining.chopsticks.Chopstick;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderedPhilosopher extends Philosopher {
+
+    private List<Chopstick> holdedChopsticks = new ArrayList<>();
 
     public OrderedPhilosopher(int number, Table table) {
         super(number, table);
@@ -11,19 +16,30 @@ public class OrderedPhilosopher extends Philosopher {
 
     /**
      * The partial order of resources (sticks) is used in resource hierarchy solution to dining problems.
+     *
      * @throws InterruptedException
      */
+    @Override
     public void prepareToEat() throws InterruptedException {
-        sticks.forEach(this::acquireChopstick);
-    }
-
-    private void acquireChopstick(Chopstick chopstick) {
         try {
-            chopstick.take();
+            for (Chopstick chopstick : sticks) {
+                chopstick.take();
+                holdedChopsticks.add(chopstick);
+            }
         } catch (InterruptedException e) {
             // Unlock all previous locked sticks in the case of failure
-            e.printStackTrace();
+            giveUpAllSticks();
+            throw new InterruptedException("There is an exception during trying to lock");
         }
     }
 
+    @Override
+    public void prepareToThink() throws InterruptedException {
+        giveUpAllSticks();
+    }
+
+    private void giveUpAllSticks() {
+        holdedChopsticks.forEach(Chopstick::put);
+        holdedChopsticks.clear();
+    }
 }
