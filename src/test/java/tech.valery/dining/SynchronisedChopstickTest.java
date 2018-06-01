@@ -16,7 +16,7 @@ public class SynchronisedChopstickTest {
     void ShouldBlockThreadsAttemptingToGetChopstick_WhenChopsickIsAlreadyGotten()
             throws ExecutionException, InterruptedException {
 
-        Chopstick chopstick = new ScheduleSynchronisedChopstic(1);
+        Chopstick chopstick = new ScheduleSynchronisedChopstic();
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 

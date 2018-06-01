@@ -27,7 +27,7 @@ public class Table {
         Arrays.fill(chopstickIsInFreeState, Boolean.TRUE);
 
         sticks = new LockChopstick[participantsNumber];
-        Arrays.setAll(sticks, i -> new LockChopstick(i));
+        Arrays.setAll(sticks, i -> new LockChopstick());
     }
 
     public Chopstick getRightChopstick(int seat) {

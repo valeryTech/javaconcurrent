@@ -1,7 +1,6 @@
 package tech.valery.dining.chopsticks;
 
 import net.jcip.annotations.GuardedBy;
-import tech.valery.dining.philosophers.OrderedPhilosopher;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -14,27 +13,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LockChopstick implements Chopstick {
 
     @GuardedBy("lock")
-    private final int id;
-
-    @GuardedBy("lock")
     private boolean free = true;
 
     public final Lock lock = new ReentrantLock();
 
     public final Condition hasFreed = lock.newCondition();
 
-    public LockChopstick(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
     @Override
     public void take() throws InterruptedException {
-
         lock.lock();
         try {
             while (!free) {
@@ -55,28 +41,5 @@ public class LockChopstick implements Chopstick {
         } finally {
             lock.unlock();
         }
-    }
-
-    @Override
-    public void setHolder(OrderedPhilosopher philosopher) {
-
-    }
-
-    @Override
-    public OrderedPhilosopher getHolder() {
-        return null;
-    }
-
-    @Override
-    public Boolean isGotten() {
-        return !free;
-    }
-
-    @Override
-    public String toString() {
-        return "stick{" +
-                "id=" + id +
-                ", free=" + free +
-                '}';
     }
 }
