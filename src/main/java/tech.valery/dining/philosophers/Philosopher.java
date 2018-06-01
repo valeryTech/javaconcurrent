@@ -1,37 +1,12 @@
 package tech.valery.dining.philosophers;
 
-import tech.valery.dining.Table;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.List;
 
 public abstract class Philosopher implements Runnable {
 
-    protected final int seat;
-
-    protected final Chopstick leftChopstick;
-    protected final Chopstick rightChopstick;
-
     protected List<Chopstick> sticks;
-
-    protected final Table table;
-
-    public Philosopher(int seat, Table table) {
-        this.rightChopstick = table.getRightChopstick(seat);
-        this.leftChopstick = table.getLeftChopstick(seat);
-
-        this.seat = seat;
-        this.table = table;
-    }
-
-    @Override
-    public String toString() {
-        return "P" + seat;
-    }
-
-    public int getSeat() {
-        return seat;
-    }
 
     /**
      * Adds stick to acquisition list of resources required to achieve
@@ -73,5 +48,9 @@ public abstract class Philosopher implements Runnable {
 
     protected void sleep(long sleepDuration) {
         sleep(sleepDuration);
+    }
+
+    public int getSeat() {
+        return 0;
     }
 }

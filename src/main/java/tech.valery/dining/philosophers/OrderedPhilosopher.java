@@ -1,6 +1,5 @@
 package tech.valery.dining.philosophers;
 
-import tech.valery.dining.Table;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.ArrayList;
@@ -9,10 +8,6 @@ import java.util.List;
 public class OrderedPhilosopher extends Philosopher {
 
     private List<Chopstick> holdedChopsticks = new ArrayList<>();
-
-    public OrderedPhilosopher(int number, Table table) {
-        super(number, table);
-    }
 
     /**
      * The partial order of resources (sticks) is used in resource hierarchy solution to dining problems.
