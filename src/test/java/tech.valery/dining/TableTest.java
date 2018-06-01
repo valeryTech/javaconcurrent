@@ -6,6 +6,7 @@ import tech.valery.dining.chopsticks.LockChopstick;
 import tech.valery.dining.chopsticks.MisraStatefulStick;
 import tech.valery.dining.philosophers.ChandyPhilosopher;
 import tech.valery.dining.philosophers.DependentPhilosopher;
+import tech.valery.dining.philosophers.OrderedPhilosopher;
 import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.function.BiFunction;
@@ -17,6 +18,19 @@ public class TableTest {
     private BiFunction<Integer, Table, Philosopher> philosopherFactory;
     private Table table;
     private int problemSize;
+
+    @Test
+    void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
+        problemSize = 5;
+
+        stickSupplier = LockChopstick::new;
+        philosopherFactory =
+                (Integer seat, Table table) -> new OrderedPhilosopher(seat, table);
+
+        table = new Table(problemSize, stickSupplier, philosopherFactory);
+
+        table.startSimulation();
+    }
 
 
     @Test
