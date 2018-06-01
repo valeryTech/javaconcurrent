@@ -5,7 +5,7 @@ import tech.valery.dining.chopsticks.Chopstick;
 
 public class OrderedPhilosopher extends Philosopher {
 
-    public OrderedPhilosopher(int number, Chopstick leftChopstick, Chopstick rightChopstick, Table table) {
+    public OrderedPhilosopher(int number, Table table) {
         super(number, table);
     }
 
@@ -14,12 +14,16 @@ public class OrderedPhilosopher extends Philosopher {
      * @throws InterruptedException
      */
     public void prepareToEat() throws InterruptedException {
-        Chopstick firstChopstcik = leftChopstick.getId() < rightChopstick.getId() ? leftChopstick : rightChopstick;
-        Chopstick secondChopstick = leftChopstick.getId() < rightChopstick.getId() ? rightChopstick : leftChopstick;
+        sticks.forEach(this::acquireChopstick);
+    }
 
-        firstChopstcik.take();
-        sleep(40);
-        secondChopstick.take();
+    private void acquireChopstick(Chopstick chopstick) {
+        try {
+            chopstick.take();
+        } catch (InterruptedException e) {
+            // Unlock all previous locked sticks in the case of failure
+            e.printStackTrace();
+        }
     }
 
 }

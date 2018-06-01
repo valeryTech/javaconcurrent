@@ -1,7 +1,6 @@
 package tech.valery.dining;
 
 import tech.valery.dining.chopsticks.Chopstick;
-import tech.valery.dining.philosophers.ChandyPhilosopher;
 import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.Arrays;
@@ -32,7 +31,7 @@ public class Table {
         sticks = new Chopstick[participantsNumber];
         Arrays.setAll(sticks, i -> stickSupplier.get());
 
-        Philosopher[] philosophers = new ChandyPhilosopher[participantsNumber];
+        Philosopher[] philosophers = new Philosopher[participantsNumber];
         Arrays.setAll(philosophers, i -> philosopherFactory.apply(i, this));
     }
 

@@ -3,12 +3,16 @@ package tech.valery.dining.philosophers;
 import tech.valery.dining.Table;
 import tech.valery.dining.chopsticks.Chopstick;
 
+import java.util.List;
+
 public abstract class Philosopher implements Runnable {
 
     protected final int seat;
 
     protected final Chopstick leftChopstick;
     protected final Chopstick rightChopstick;
+
+    protected List<Chopstick> sticks;
 
     protected final Table table;
 
@@ -29,6 +33,15 @@ public abstract class Philosopher implements Runnable {
         return seat;
     }
 
+    /**
+     * Adds stick to acquisition list of resources required to achieve
+     * the eat for the philosopher
+     * @param stick
+     */
+    public void addStick(Chopstick stick){
+        sticks.add(stick);
+    }
+
     @Override
     public void run() {
         try {
@@ -40,7 +53,6 @@ public abstract class Philosopher implements Runnable {
 
                 prepareToThink();
                 think(timeout);
-
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -50,8 +62,7 @@ public abstract class Philosopher implements Runnable {
     public abstract void prepareToEat() throws InterruptedException;
 
     public void prepareToThink() throws InterruptedException {
-        leftChopstick.put();
-        rightChopstick.put();
+        sticks.forEach(Chopstick::put);
     }
 
     private void eat(long eatDuration) {

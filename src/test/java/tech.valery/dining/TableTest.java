@@ -32,7 +32,6 @@ public class TableTest {
         table.startSimulation();
     }
 
-
     @Test
     void ShouldRunWithoutDeadlocks_WhenUsingArbitrator() {
         problemSize = 5;
