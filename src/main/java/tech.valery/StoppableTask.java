@@ -1,9 +1,8 @@
 package tech.valery;
 
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
-public class StoppableTask implements Runnable{
+public class StoppableTask implements Runnable {
 
     private long runningTime;
 
@@ -16,15 +15,8 @@ public class StoppableTask implements Runnable{
 
         long startTime = System.nanoTime();
 
-        while (!shouldStop && !isTimeIntervalExceeded(startTime)){
-            System.out.println("running");
-
-            try {
-                TimeUnit.MILLISECONDS.sleep(TIME_STEP);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        while (!shouldStop && !isTimeIntervalExceeded(startTime))
+            Common.sleep((int) TIME_STEP);
 
         runningTime = System.nanoTime() - startTime;
     }

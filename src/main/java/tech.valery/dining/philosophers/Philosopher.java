@@ -31,17 +31,19 @@ public abstract class Philosopher implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            long timeout = 200;
-            try {
+        try {
+            while (true) {
+                long timeout = 200;
+
                 prepareToEat();
                 eat(timeout);
 
                 prepareToThink();
                 think(timeout);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

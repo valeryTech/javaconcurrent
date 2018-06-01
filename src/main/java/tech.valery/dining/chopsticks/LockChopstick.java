@@ -13,10 +13,10 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LockChopstick implements Chopstick {
 
-    @GuardedBy("this")
+    @GuardedBy("lock")
     private final int id;
 
-    @GuardedBy("this")
+    @GuardedBy("lock")
     private boolean free = true;
 
     public final Lock lock = new ReentrantLock();
