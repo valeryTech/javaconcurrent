@@ -16,7 +16,7 @@ public class StoppableTask implements Runnable {
         long startTime = System.nanoTime();
 
         while (!shouldStop && !isTimeIntervalExceeded(startTime))
-            Common.sleep((int) TIME_STEP);
+            Common.sleep(TIME_STEP);
 
         runningTime = System.nanoTime() - startTime;
     }

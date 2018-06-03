@@ -16,7 +16,6 @@ public class TableTest {
     void PhilosopherShouldAddSticks() {
         Philosopher p = new OrderedPhilosopher();
         p.addStick(new LockChopstick());
-
     }
 
     @Test

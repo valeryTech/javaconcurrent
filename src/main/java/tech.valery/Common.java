@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Common {
-    public static void sleep(int timeout) {
+    public static void sleep(long timeout) {
         try {
             TimeUnit.MILLISECONDS.sleep(timeout);
         } catch (InterruptedException e) {

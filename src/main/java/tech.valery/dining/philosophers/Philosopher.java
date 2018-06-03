@@ -1,5 +1,6 @@
 package tech.valery.dining.philosophers;
 
+import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.ArrayList;
@@ -40,15 +41,11 @@ public abstract class Philosopher implements Runnable {
     public abstract void prepareToThink() throws InterruptedException;
 
     private void eat(long eatDuration) {
-        sleep(eatDuration);
+        Common.sleep(eatDuration);
     }
 
     private void think(long thinkDuration) {
-        sleep(thinkDuration);
-    }
-
-    protected void sleep(long sleepDuration) {
-        sleep(sleepDuration);
+        Common.sleep(thinkDuration);
     }
 
     public int getSeat() {
