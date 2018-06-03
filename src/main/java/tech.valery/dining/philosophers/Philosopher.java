@@ -36,11 +36,12 @@ public abstract class Philosopher implements Runnable {
         }
     }
 
-    public abstract void prepareToEat() throws InterruptedException;
+    public abstract void prepareToEat();
 
     public abstract void prepareToThink() throws InterruptedException;
 
     private void eat(long eatDuration) {
+        System.out.println(Thread.currentThread().getId() + "\t is eating");
         Common.sleep(eatDuration);
     }
 

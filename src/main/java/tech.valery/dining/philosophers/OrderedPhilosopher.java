@@ -1,13 +1,13 @@
 package tech.valery.dining.philosophers;
 
-import tech.valery.Common;
+import net.jcip.annotations.GuardedBy;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderedPhilosopher extends Philosopher {
-
+    @GuardedBy("this")
     private List<Chopstick> holdedChopsticks = new ArrayList<>();
 
     /**
@@ -16,16 +16,19 @@ public class OrderedPhilosopher extends Philosopher {
      * @throws InterruptedException
      */
     @Override
-    public void prepareToEat() throws InterruptedException {
+    public void prepareToEat() {
         try {
             for (Chopstick chopstick : sticks) {
-                chopstick.take();
-                holdedChopsticks.add(chopstick);
+                // ensure atomicity
+                synchronized (this){
+                    chopstick.take();
+                    holdedChopsticks.add(chopstick);
+                }
             }
         } catch (InterruptedException e) {
             // Unlock all previous locked sticks in the case of failure
             giveUpAllSticks();
-            throw new InterruptedException("There is an exception during trying to lock");
+            e.printStackTrace();
         }
     }
 
@@ -34,7 +37,7 @@ public class OrderedPhilosopher extends Philosopher {
         giveUpAllSticks();
     }
 
-    private void giveUpAllSticks() {
+    private synchronized void giveUpAllSticks() {
         holdedChopsticks.forEach(Chopstick::put);
         holdedChopsticks.clear();
     }
@@ -46,8 +49,6 @@ public class OrderedPhilosopher extends Philosopher {
 
     @Override
     public String toString() {
-        return "OrderedPhilosopher{" +
-                "holdedChopsticks=" + Common.asString(sticks) +
-                '}';
+        return "P";
     }
 }

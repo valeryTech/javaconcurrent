@@ -7,7 +7,7 @@ public class DependentPhilosopher extends Philosopher {
      * @throws InterruptedException
      */
     @Override
-    public void prepareToEat() throws InterruptedException {
+    public void prepareToEat() {
         //table.waitSticks(this);
 
 

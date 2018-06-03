@@ -3,7 +3,7 @@ package tech.valery.dining.philosophers;
 public class ChandyPhilosopher extends Philosopher{
 
     @Override
-    public void prepareToEat() throws InterruptedException {
+    public void prepareToEat() {
 
     }
 
