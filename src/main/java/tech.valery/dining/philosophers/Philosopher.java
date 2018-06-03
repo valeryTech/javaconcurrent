@@ -2,11 +2,12 @@ package tech.valery.dining.philosophers;
 
 import tech.valery.dining.chopsticks.Chopstick;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Philosopher implements Runnable {
 
-    protected List<Chopstick> sticks;
+    protected List<Chopstick> sticks = new ArrayList<>();
 
     /**
      * Adds stick to acquisition list of resources required to achieve

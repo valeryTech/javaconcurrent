@@ -6,14 +6,21 @@ import tech.valery.dining.chopsticks.MisraStatefulStick;
 import tech.valery.dining.philosophers.ChandyPhilosopher;
 import tech.valery.dining.philosophers.DependentPhilosopher;
 import tech.valery.dining.philosophers.OrderedPhilosopher;
+import tech.valery.dining.philosophers.Philosopher;
 
 public class TableTest {
 
     private Table table;
 
     @Test
-    void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
+    void PhilosopherShouldAddSticks() {
+        Philosopher p = new OrderedPhilosopher();
+        p.addStick(new LockChopstick());
 
+    }
+
+    @Test
+    void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
         table = new Table(5, LockChopstick::new, OrderedPhilosopher::new);
         table.startSimulation();
     }

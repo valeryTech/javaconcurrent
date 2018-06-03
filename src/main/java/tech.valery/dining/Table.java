@@ -1,5 +1,6 @@
 package tech.valery.dining;
 
+import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
 
@@ -19,37 +20,41 @@ public class Table {
 
     private final int participantsNumber;
 
-    private final boolean[] chopstickIsInFreeState;
+    private final boolean[] isFree;
 
-    private final Chopstick[] sticks;
-    private final Philosopher[] philosophers;
+    private final List<Chopstick> sticks;
+    private final List<Philosopher> philosophers;
 
     public Table(int participantsNumber, Supplier<Chopstick> stickSupplier,
                  Supplier<Philosopher> philosopherSupplier) {
+
         this.participantsNumber = participantsNumber;
 
-        chopstickIsInFreeState = new boolean[participantsNumber];
-        Arrays.fill(chopstickIsInFreeState, Boolean.TRUE);
+        this.isFree = new boolean[participantsNumber];
+        Arrays.fill(this.isFree, Boolean.TRUE);
 
-        List<Chopstick> csticks = Stream.generate(stickSupplier)
+        this.sticks = Stream.generate(stickSupplier)
                 .limit(participantsNumber)
                 .collect(Collectors.toList());
 
-        sticks = new Chopstick[participantsNumber];
-        Arrays.setAll(sticks, i -> stickSupplier.get());
+        this.philosophers = Stream.generate(philosopherSupplier)
+                .limit(participantsNumber)
+                .collect(Collectors.toList());
 
+        //set sticks to philosophers
 
+        for (int seat = 0; seat < participantsNumber; seat++) {
+            philosophers.get(seat).addStick(sticks.get(seat));
+            philosophers.get(seat).addStick(sticks.get((seat + 1) % participantsNumber));
+        }
 
-        philosophers = new Philosopher[participantsNumber];
-        Arrays.setAll(philosophers, i -> philosopherSupplier.get());
-    }
+//        IntStream.range(0, philosophers.size())
+//                .peek(seat -> {
+//                    Philosopher ph = philosophers.get(seat);
+//                    ph.addStick(sticks.get(seat));
+//                    ph.addStick(sticks.get((seat + 1) % participantsNumber));
+//                });
 
-    public Chopstick getRightChopstick(int seat) {
-        return sticks[(seat + 1) % participantsNumber];
-    }
-
-    public Chopstick getLeftChopstick(int seat) {
-        return sticks[seat];
     }
 
     public void waitSticks(Philosopher philosopher) throws InterruptedException {
@@ -59,8 +64,8 @@ public class Table {
             while (!bothSticksIsFree(philosopher)) {
                 stateChanged.await();
             }
-            chopstickIsInFreeState[philosopher.getSeat()] = false;
-            chopstickIsInFreeState[philosopher.getSeat() + 1] = false;
+            isFree[philosopher.getSeat()] = false;
+            isFree[philosopher.getSeat() + 1] = false;
         } finally {
             lock.unlock();
         }
@@ -69,8 +74,8 @@ public class Table {
     public void stickHasPuttedDown(Philosopher philosopher) {
         lock.lock();
         try {
-            chopstickIsInFreeState[philosopher.getSeat()] = true;
-            chopstickIsInFreeState[philosopher.getSeat() + 1] = true;
+            isFree[philosopher.getSeat()] = true;
+            isFree[philosopher.getSeat() + 1] = true;
             stateChanged.signalAll();
         } finally {
             lock.unlock();
@@ -78,10 +83,14 @@ public class Table {
     }
 
     private boolean bothSticksIsFree(Philosopher philosopher) {
-        return chopstickIsInFreeState[philosopher.getSeat()] && chopstickIsInFreeState[philosopher.getSeat() + 1];
+        return isFree[philosopher.getSeat()] && isFree[philosopher.getSeat() + 1];
     }
 
     public void startSimulation() {
+        philosophers.forEach(Philosopher::run);
+    }
 
+    public void show() {
+        System.out.println(Common.asString(philosophers));
     }
 }

@@ -1,5 +1,6 @@
 package tech.valery.dining.philosophers;
 
+import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.ArrayList;
@@ -36,5 +37,17 @@ public class OrderedPhilosopher extends Philosopher {
     private void giveUpAllSticks() {
         holdedChopsticks.forEach(Chopstick::put);
         holdedChopsticks.clear();
+    }
+
+    @Override
+    public void addStick(Chopstick stick) {
+        super.addStick(stick);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderedPhilosopher{" +
+                "holdedChopsticks=" + Common.asString(sticks) +
+                '}';
     }
 }
