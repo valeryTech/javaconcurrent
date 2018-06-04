@@ -1,27 +1,21 @@
-package tech.valery.dining.tables;
+package tech.valery.dining;
 
-import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Supplier;
 
-public class ManagerTable extends Table{
+public class Waiter{
     private final boolean[] isFree;
 
     private final Lock lock = new ReentrantLock();
     private final Condition stateChanged = lock.newCondition();
 
-    public ManagerTable(int participantsNumber, Supplier<Chopstick> stickSupplier,
-                        Supplier<Philosopher> philosopherSupplier) {
-        super(participantsNumber, stickSupplier, philosopherSupplier);
-
+    public Waiter(int participantsNumber) {
         this.isFree = new boolean[participantsNumber];
         Arrays.fill(this.isFree, Boolean.TRUE);
-
     }
 
     public void waitSticks(Philosopher philosopher) throws InterruptedException {

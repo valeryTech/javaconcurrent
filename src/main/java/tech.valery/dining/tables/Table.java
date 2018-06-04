@@ -1,6 +1,5 @@
 package tech.valery.dining.tables;
 
-import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
 
@@ -45,10 +44,6 @@ public class Table {
     public void startSimulation() {
         ExecutorService service = Executors.newFixedThreadPool(participantsNumber);
         philosophers.forEach((philosopher) -> service.submit(philosopher::run));
-    }
-
-    public void show() {
-        System.out.println(Common.asString(philosophers));
     }
 
     public void setLogFile(PrintWriter printWriter) {

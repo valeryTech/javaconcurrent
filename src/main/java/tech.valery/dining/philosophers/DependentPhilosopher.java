@@ -1,13 +1,14 @@
 package tech.valery.dining.philosophers;
 
-import tech.valery.dining.tables.ManagerTable;
+import tech.valery.dining.Waiter;
 
 public class DependentPhilosopher extends Philosopher {
 
-    private ManagerTable table;
+    private Waiter waiter;
 
-    public DependentPhilosopher(long eatTime, long thinkTime) {
+    public DependentPhilosopher(long eatTime, long thinkTime, Waiter waiter) {
         super(eatTime, thinkTime);
+        this.waiter = waiter;
     }
 
     /**
@@ -18,7 +19,7 @@ public class DependentPhilosopher extends Philosopher {
     @Override
     public void prepareToEat() {
         try {
-            table.waitSticks(this);
+            waiter.waitSticks(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -26,11 +27,6 @@ public class DependentPhilosopher extends Philosopher {
 
     @Override
     public void prepareToThink() throws InterruptedException {
-
-        table.stickHasPuttedDown(this);
-    }
-
-    public void setTable(ManagerTable table) {
-        this.table = table;
+        waiter.stickHasPuttedDown(this);
     }
 }
