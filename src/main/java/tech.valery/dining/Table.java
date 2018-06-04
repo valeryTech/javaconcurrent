@@ -6,6 +6,8 @@ import tech.valery.dining.philosophers.Philosopher;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -42,19 +44,10 @@ public class Table {
                 .collect(Collectors.toList());
 
         //set sticks to philosophers
-
         for (int seat = 0; seat < participantsNumber; seat++) {
             philosophers.get(seat).addStick(sticks.get(seat));
             philosophers.get(seat).addStick(sticks.get((seat + 1) % participantsNumber));
         }
-
-//        IntStream.range(0, philosophers.size())
-//                .peek(seat -> {
-//                    Philosopher ph = philosophers.get(seat);
-//                    ph.addStick(sticks.get(seat));
-//                    ph.addStick(sticks.get((seat + 1) % participantsNumber));
-//                });
-
     }
 
     public void waitSticks(Philosopher philosopher) throws InterruptedException {
@@ -87,7 +80,8 @@ public class Table {
     }
 
     public void startSimulation() {
-        philosophers.forEach(Philosopher::run);
+        ExecutorService service = Executors.newFixedThreadPool(participantsNumber);
+        philosophers.forEach((philosopher) -> service.submit(philosopher::run));
     }
 
     public void show() {
