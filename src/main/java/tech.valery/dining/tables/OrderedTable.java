@@ -1,4 +1,4 @@
-package tech.valery.dining;
+package tech.valery.dining.tables;
 
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;

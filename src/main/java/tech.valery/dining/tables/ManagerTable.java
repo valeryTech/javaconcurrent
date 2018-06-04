@@ -1,4 +1,4 @@
-package tech.valery.dining;
+package tech.valery.dining.tables;
 
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
@@ -21,6 +21,7 @@ public class ManagerTable extends Table{
 
         this.isFree = new boolean[participantsNumber];
         Arrays.fill(this.isFree, Boolean.TRUE);
+
     }
 
     public void waitSticks(Philosopher philosopher) throws InterruptedException {

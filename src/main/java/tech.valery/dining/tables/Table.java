@@ -1,4 +1,4 @@
-package tech.valery.dining;
+package tech.valery.dining.tables;
 
 import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
@@ -17,7 +17,7 @@ public class Table {
     private final int participantsNumber;
 
     private final List<Chopstick> sticks;
-    private final List<Philosopher> philosophers;
+    protected final List<Philosopher> philosophers;
 
     public Table(int participantsNumber, Supplier<Chopstick> stickSupplier,
                  Supplier<Philosopher> philosopherSupplier) {
