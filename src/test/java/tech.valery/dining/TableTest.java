@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.valery.Common;
 import tech.valery.dining.chopsticks.LockChopstick;
+import tech.valery.dining.chopsticks.SimpleLockChopstick;
 import tech.valery.dining.philosophers.DependentPhilosopher;
 import tech.valery.dining.philosophers.OrderedPhilosopher;
 import tech.valery.dining.philosophers.Philosopher;
@@ -41,7 +42,7 @@ public class TableTest {
 
         Supplier<Philosopher> philosopherSupplier = () -> new OrderedPhilosopher(eatTime, thinkTime);
 
-        table = new Table(5, LockChopstick::new, philosopherSupplier);
+        table = new Table(5, SimpleLockChopstick::new, philosopherSupplier);
         table.setLogFile(printWriter);
 
         table.startSimulation();
