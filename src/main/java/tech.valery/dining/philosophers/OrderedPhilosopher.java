@@ -27,7 +27,7 @@ public class OrderedPhilosopher extends Philosopher {
             // ensure atomicity
             synchronized (this) {
                 for (Chopstick chopstick : sticks) {
-                    chopstick.take();
+                    chopstick.pickUp();
                     holdedChopsticks.add(chopstick);
                 }
             }
@@ -44,7 +44,7 @@ public class OrderedPhilosopher extends Philosopher {
     }
 
     private synchronized void giveUpAllSticks() {
-        holdedChopsticks.forEach(Chopstick::put);
+        holdedChopsticks.forEach(Chopstick::putDown);
         holdedChopsticks.clear();
     }
 
