@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderedPhilosopher extends Philosopher {
+
     @GuardedBy("this")
-    private List<Chopstick> holdedChopsticks = new ArrayList<>();
+    private final List<Chopstick> holdedChopsticks;
+
+    public OrderedPhilosopher(long eatTime, long thinkTime) {
+        super(eatTime, thinkTime);
+        holdedChopsticks = new ArrayList<>();
+    }
 
     /**
      * The partial order of resources (sticks) is used in resource hierarchy solution to dining problems.
@@ -18,9 +24,10 @@ public class OrderedPhilosopher extends Philosopher {
     @Override
     public void prepareToEat() {
         try {
-            for (Chopstick chopstick : sticks) {
-                // ensure atomicity
-                synchronized (this){
+            synchronized (this) {
+                for (Chopstick chopstick : sticks) {
+                    // ensure atomicity
+
                     chopstick.take();
                     holdedChopsticks.add(chopstick);
                 }

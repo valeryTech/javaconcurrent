@@ -15,10 +15,13 @@ public class PhilosopherTest {
     void ThreadShouldBlock() throws InterruptedException {
         Chopstick stick = new LockChopstick();
 
-        Philosopher firstPhilosopher = new OrderedPhilosopher();
+        long eatTime = 10;
+        long thinkTime = 1;
+
+        Philosopher firstPhilosopher = new OrderedPhilosopher(eatTime, thinkTime);
         firstPhilosopher.addStick(stick);
 
-        Philosopher secondPhilosopher = new OrderedPhilosopher();
+        Philosopher secondPhilosopher = new OrderedPhilosopher(eatTime, thinkTime);
         secondPhilosopher.addStick(stick);
 
         firstPhilosopher.prepareToEat();
