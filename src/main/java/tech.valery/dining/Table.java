@@ -33,10 +33,13 @@ public class Table {
                 .collect(Collectors.toList());
 
         //set sticks to philosophers
-        for (int seat = 0; seat < participantsNumber; seat++) {
+        for (int seat = 0; seat < participantsNumber - 1; seat++) {
             philosophers.get(seat).addStick(sticks.get(seat));
             philosophers.get(seat).addStick(sticks.get((seat + 1) % participantsNumber));
         }
+
+        philosophers.get(participantsNumber - 1).addStick(sticks.get(0));
+        philosophers.get(participantsNumber - 1).addStick(sticks.get(participantsNumber - 1));
     }
 
     public void startSimulation() {

@@ -24,10 +24,9 @@ public class OrderedPhilosopher extends Philosopher {
     @Override
     public void prepareToEat() {
         try {
+            // ensure atomicity
             synchronized (this) {
                 for (Chopstick chopstick : sticks) {
-                    // ensure atomicity
-
                     chopstick.take();
                     holdedChopsticks.add(chopstick);
                 }
