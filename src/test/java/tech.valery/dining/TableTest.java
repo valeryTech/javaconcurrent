@@ -1,8 +1,11 @@
 package tech.valery.dining;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.valery.Common;
 import tech.valery.dining.chopsticks.LockChopstick;
+import tech.valery.dining.philosophers.DependentPhilosopher;
 import tech.valery.dining.philosophers.OrderedPhilosopher;
 import tech.valery.dining.philosophers.Philosopher;
 
@@ -13,6 +16,21 @@ import java.util.function.Supplier;
 public class TableTest {
 
     private Table table;
+    private PrintWriter printWriter;
+
+    @BeforeEach
+    void setUp() {
+        try {
+            printWriter = new PrintWriter("log.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @AfterEach
+    void exitSetUp() {
+        printWriter.close();
+    }
 
     @Test
     void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
@@ -22,14 +40,25 @@ public class TableTest {
 
         Supplier<Philosopher> philosopherSupplier = () -> new OrderedPhilosopher(eatTime, thinkTime);
 
-        try (PrintWriter printWriter = new PrintWriter("log.txt")) {
-            table = new Table(5, LockChopstick::new, philosopherSupplier);
-            table.setLogFile(printWriter);
+        table = new OrderedTable(5, LockChopstick::new, philosopherSupplier);
+        table.setLogFile(printWriter);
 
-            table.startSimulation();
-            Common.sleep(1000);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        table.startSimulation();
+        Common.sleep(1000);
+
+    }
+
+    @Test
+    void ManagerTableTest() {
+        long eatTime = 10;
+        long thinkTime = 5;
+
+        Supplier<Philosopher> philosopherSupplier = () -> new DependentPhilosopher(eatTime, thinkTime);
+        table = new ManagerTable(5, LockChopstick::new, philosopherSupplier);
+
+        table.setLogFile(printWriter);
+
+        table.startSimulation();
+        Common.sleep(1000);
     }
 }
