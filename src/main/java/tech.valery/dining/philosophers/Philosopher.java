@@ -12,11 +12,12 @@ public abstract class Philosopher implements Runnable {
 
     private final long eatTime;
     private final long thinkTime;
+
     protected List<Chopstick> sticks = new ArrayList<>();
+
     private PrintWriter printWriter;
 
     public Philosopher(long eatTime, long thinkTime) {
-
         this.eatTime = eatTime;
         this.thinkTime = thinkTime;
     }
