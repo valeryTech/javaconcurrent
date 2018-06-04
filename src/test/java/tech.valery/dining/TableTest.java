@@ -1,6 +1,7 @@
 package tech.valery.dining;
 
 import org.junit.jupiter.api.Test;
+import tech.valery.Common;
 import tech.valery.dining.chopsticks.LockChopstick;
 import tech.valery.dining.chopsticks.MisraStatefulStick;
 import tech.valery.dining.philosophers.ChandyPhilosopher;
@@ -22,6 +23,8 @@ public class TableTest {
     void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
         table = new Table(5, LockChopstick::new, OrderedPhilosopher::new);
         table.startSimulation();
+
+        Common.sleep(1000);
     }
 
     @Test
