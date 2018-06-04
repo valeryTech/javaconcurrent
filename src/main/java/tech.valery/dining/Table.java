@@ -4,6 +4,7 @@ import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 import tech.valery.dining.philosophers.Philosopher;
 
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -86,5 +87,9 @@ public class Table {
 
     public void show() {
         System.out.println(Common.asString(philosophers));
+    }
+
+    public void setLogFile(PrintWriter printWriter) {
+        philosophers.forEach(philosopher -> philosopher.setWriter(printWriter));
     }
 }

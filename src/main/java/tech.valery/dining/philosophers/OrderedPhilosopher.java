@@ -1,7 +1,6 @@
 package tech.valery.dining.philosophers;
 
 import net.jcip.annotations.GuardedBy;
-import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class OrderedPhilosopher extends Philosopher {
                 synchronized (this){
                     chopstick.take();
                     holdedChopsticks.add(chopstick);
-                    Common.sleep(50);
                 }
             }
         } catch (InterruptedException e) {

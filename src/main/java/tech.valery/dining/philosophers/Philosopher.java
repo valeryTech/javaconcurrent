@@ -3,33 +3,49 @@ package tech.valery.dining.philosophers;
 import tech.valery.Common;
 import tech.valery.dining.chopsticks.Chopstick;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public abstract class Philosopher implements Runnable {
 
     protected List<Chopstick> sticks = new ArrayList<>();
+    private PrintWriter printWriter;
 
     /**
      * Adds stick to acquisition list of resources required to achieve
      * the eat for the philosopher
+     *
      * @param stick
      */
-    public void addStick(Chopstick stick){
+    public void addStick(Chopstick stick) {
         sticks.add(stick);
     }
 
     @Override
     public void run() {
+
+        Long startPreparingTime;
+        Long endPreparingTime;
+
+        printWriter.print(Thread.currentThread().getId() + "\t");
+
         try {
             while (true) {
-                long timeout = 200;
+                long timeout = 2;
 
+                startPreparingTime = System.nanoTime();
                 prepareToEat();
+                endPreparingTime = System.nanoTime();
+
                 eat(timeout);
 
                 prepareToThink();
                 think(timeout);
+
+                printWriter.println(Thread.currentThread().getId() + "\t" +
+                        TimeUnit.MICROSECONDS.convert(endPreparingTime - startPreparingTime, TimeUnit.NANOSECONDS));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -41,7 +57,6 @@ public abstract class Philosopher implements Runnable {
     public abstract void prepareToThink() throws InterruptedException;
 
     private void eat(long eatDuration) {
-        System.out.println(Thread.currentThread().getId() + "\t is eating");
         Common.sleep(eatDuration);
     }
 
@@ -51,5 +66,9 @@ public abstract class Philosopher implements Runnable {
 
     public int getSeat() {
         return 0;
+    }
+
+    public void setWriter(PrintWriter printWriter) {
+        this.printWriter = printWriter;
     }
 }

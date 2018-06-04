@@ -9,6 +9,9 @@ import tech.valery.dining.philosophers.DependentPhilosopher;
 import tech.valery.dining.philosophers.OrderedPhilosopher;
 import tech.valery.dining.philosophers.Philosopher;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class TableTest {
 
     private Table table;
@@ -21,10 +24,15 @@ public class TableTest {
 
     @Test
     void ShouldRunWithoutDeadlocks_WhenOrderingResources() {
-        table = new Table(5, LockChopstick::new, OrderedPhilosopher::new);
-        table.startSimulation();
 
-        Common.sleep(1000);
+        try (PrintWriter printWriter = new PrintWriter("log.txt")) {
+            table = new Table(5, LockChopstick::new, OrderedPhilosopher::new);
+            table.setLogFile(printWriter);
+            table.startSimulation();
+            Common.sleep(1000);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
